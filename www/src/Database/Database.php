@@ -2,6 +2,8 @@
 
 namespace Src\Database;
 
+use Src\Http\Exceptions\HttpException;
+
 class Database
 {
     /**
@@ -28,7 +30,7 @@ class Database
         try {
             $this->pdoConnection = new \PDO("mysql:host={$this->config['database_hostname']};port={$this->config['database_port']};dbname={$this->config['database_name']};", $this->config['database_username'], $this->config['database_password']);
         } catch (\PDOException $exc) {
-            var_dump($exc);
+            throw new HttpException('Server error');
         }
     }
 
