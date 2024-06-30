@@ -1,0 +1,38 @@
+services:
+    php:
+        container_name: "php"
+        volumes:
+            - "./www:/var/www/test-rest"
+        build:
+            context: "./images"
+            dockerfile: "php.dockerfile"
+    nginx:
+        container_name: "nginx"
+        image: "nginx:stable-alpine"
+        volumes:
+            - "./volumes/nginx/conf.d:/etc/nginx/conf.d:ro"
+            - "./www:/usr/share/nginx/html"
+        ports:
+            - "80:80"
+        depends_on:
+            - "php"
+            - "mysql"
+    mysql:
+        container_name: "mysql"
+        build:
+            context: "./images"
+            dockerfile: "mysql.dockerfile"
+        volumes:
+            - "./volumes/mysql/data:/var/lib/mysql"
+        ports:
+            - "3306:3306"
+        env_file:
+            - "./env/mysql.env"
+
+    composer:
+        container_name: "composer"
+        build:
+            context: "./images"
+            dockerfile: "composer.dockerfile"
+        volumes:
+            - "./www:/var/www/test-rest" 
