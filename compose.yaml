@@ -13,7 +13,7 @@ services:
             - "./volumes/nginx/conf.d:/etc/nginx/conf.d:ro"
             - "./www:/usr/share/nginx/html"
         ports:
-            - "80:80"
+            - "8001:80"
         depends_on:
             - "php"
             - "mysql"

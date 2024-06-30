@@ -44,8 +44,7 @@ class Database
         $stmt = $this->pdoConnection->prepare($sqlQuery);
         $executed = $stmt->execute($params);
 
-        if (str_contains($sqlQuery, 'INSERT'))
-        {
+        if (str_contains($sqlQuery, 'INSERT')) {
             return $executed;
         }
 
@@ -57,6 +56,6 @@ class Database
      */
     private function loadConfig(): void
     {
-        $this->config = include BASE_DIR . '/app/Config/database.php';
+        $this->config = @include BASE_DIR . '/app/Config/database.php';
     }
 }

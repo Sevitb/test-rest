@@ -39,7 +39,11 @@ class Application
 
     private function bootstrap()
     {
-        $dotenv = Dotenv::createImmutable(BASE_DIR);
-        $dotenv->load();
+        try {
+            $dotenv = Dotenv::createImmutable(BASE_DIR);
+            $dotenv->load();
+        } catch (\Throwable $th) {
+            return new JsonResponse(['status' => 'fail', 'message' => 'Server error'], 500);
+        }
     }
 }
